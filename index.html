@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>SJDS Directory</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="vendor/mui.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="img/icon-48.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="img/icon-96.png">
+    <link rel="apple-touch-icon" sizes="196x196" href="img/icon-196.png">
+</head>
+
+<body>
+    <header id="header">
+        <div class="mui-appbar mui--appbar-line-height">
+            <div class="mui-container-fluid">
+                <a class="sidedrawer-toggle mui--visible-xs-inline-block js-show-sidedrawer hover-shadow">
+                    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 23" width="17" height="23">
+                        <style>
+                        .st0 {
+                            fill: #fff;
+                        }
+                        </style>
+                        <path class="st0" d="M0 10.5h17v2H0zM0 5h17v2H0zM0 16h17v2H0z" />
+                    </svg>
+                </a>
+                <a class="sidedrawer-toggle mui--hidden-xs js-hide-sidedrawer hover-shadow">
+                    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 23" width="17" height="23">
+                        <style>
+                        .st0 {
+                            fill: #fff;
+                        }
+                        </style>
+                        <path class="st0" d="M0 10.5h17v2H0zM0 5h17v2H0zM0 16h17v2H0z" />
+                    </svg>
+                </a>
+                <span class="mui--text-title mui--visible-xs-inline-block title">SJDS Directory</span>
+            </div>
+        </div>
+    </header>
+    <div id="sidedrawer" class="mui--no-user-select">
+        <div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">
+            <img src="images/sjds-logo.svg" alt="" width="100px"> </div>
+        <div class="mui-divider"></div>
+        <ul>
+            <li>
+                <a href="#" id="pokemon-link">
+                    <strong>Locations</strong>
+                </a>
+            </li>
+            <li>
+                <a href="http://senorcoders.com" target="_blank">
+                    <strong>About</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="content-wrapper">
+        <div class="loader">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+            </svg>
+        </div>
+        <div class="mui--appbar-height"></div>
+        <div class="mui-container-fluid">
+            <br>
+            <h1 id="main-title">SJDS Directory</h1>
+            <div class="mui-textfield">
+                <input id="monsters-search-bar" type="search" placeholder="Find Anything in San Juan del Sur" spellcheck="false" autocorrect="off" autocomplete="off" onkeyup="search()" />
+                <label for="monsters-search-bar" class="sr-only">Find Anything in San Juan del Sur</label>
+            </div>
+            <div id="monsters-list-wrapper">
+                <ul id="monsters-list"></ul>
+                <div id="progress-mask"></div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <div class="mui-container-fluid">
+            <br/> This is just a PWA test for SJDS Directory
+        </div>
+    </footer>
+    <div id="detail-view-container" class="hidden">
+        <div id="detail-view">
+            <div style="background: linear-gradient(90deg, rgb(38, 198, 217) 50%, rgb(30, 159, 175) 50%);" class="detail-view-bg">
+                <div class="big-spinner-holder">
+                    <svg width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" class="spinner big-spinner">
+                        <circle fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30" class="spinner-path"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="detail-view-fg">
+                <button type="button" class="back-button detail-back-button hover-shadow"></button>
+                <div class="mui-panel detail-panel" style="overflow-y: scroll;">
+                    <h1 style="background: rgb(74, 58, 100);" class="detail-panel-header">Loading title...</h1>
+                    <div class="detail-panel-content">
+                        <div class="detail-header">
+                            <div class="detail-sprite monster-sprite sprite-93" style="opacity: 1;"></div>
+                            <div class="detail-infobox">
+                                <div class="detail-types-and-num">
+                                    <div class="detail-national-id"><span>Loading ID</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-below-header">
+                            <div class="monster-species">Loading Name...</div>
+                            <div class="monster-description">Loading Content...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/script.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js', {
+                scope: '/'
+            })
+            .then(function(registration) {
+                console.log('Service Worker Registered');
+            });
+
+        navigator.serviceWorker.ready.then(function(registration) {
+            console.log('Service Worker Ready');
+        });
+    }
+    </script>
+    <!--     <script src="scripts/main.js"></script>
+ -->
+    <script src="scripts/mui.min.js"></script>
+    <script>
+    $(function() {
+        $ = jQuery;
+      
+        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/business/?per_page=100', function(data) {
+            $.each(data, function(i, post) {
+                $('ul#monsters-list').append('<li style="background: url(img/icon-196.png);     background-repeat: no-repeat; background-size: contain;" id="' + post.id + '"><button type="button" class="monster-sprite sprite-' + post.id + '"></button><span>' + post.title['rendered'] + '</span></li>');
+
+
+            });
+        });
+
+    });
+
+
+
+    $(document).on('click', '#monsters-list li', function() {
+        $('#detail-view-container').removeClass('hidden');
+
+        console.log(this.id);
+        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/business/' + this.id, function(data) {
+            $('.mui-panel.detail-panel > h1').html(data.title['rendered']);
+            $('.detail-national-id > span').html('#' + data.id);
+            $('.monster-species').html(data.title);
+            $('.monster-description').html(data.content['rendered']);
+
+        });
+
+    });
+
+    $(document).on('click', '.detail-back-button', function() {
+        $('#detail-view-container').addClass('hidden');
+
+    });
+
+    function search() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("monsters-search-bar");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("monsters-list");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("span")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>
