@@ -246,11 +246,13 @@ button {
     text-align: center;
 }
 
-#monsters-list {
+#monsters-list,
+#product-list {
     padding: 0;
 }
 
-#monsters-list > li {
+#monsters-list > li,
+#product-list > li {
     margin: 10px;
     position: relative;
     width: 140px;
@@ -264,26 +266,30 @@ button {
 }
 
 @media (max-width: 767px) {
-    #monsters-list li {
+    #monsters-list li,
+    #product-list li {
         margin: 5px;
     }
 }
 
 @media (max-width: 320px) {
-    #monsters-list > li {
+    #monsters-list > li,
+    #product-list li {
         width: 110px;
         height: 110px;
     }
 }
 
 @media (min-width: 992px) {
-    #monsters-list > li {
+    #monsters-list > li,
+    #product-list li {
         width: 160px;
         height: 160px;
     }
 }
 
-#monsters-list .monster-sprite {
+#monsters-list .monster-sprite,
+#product-list .monster-sprite {
     top: 0;
     left: 0;
     right: 0;
@@ -294,16 +300,20 @@ button {
     border: none;
 }
 
-#monsters-list .monster-sprite:hover {
+#monsters-list .monster-sprite:hover,
+#monster-list .monster-sprite:hover {
     background-color: rgba(255, 255, 255, .3);
 }
 
-#monsters-list .monster-sprite > .mui-ripple-effect {
+#monsters-list .monster-sprite > .mui-ripple-effect,
+#product-list .monster-sprite > .mui-ripple-effect {
     background-color: rgb(255, 255, 255);
 }
 
 #monsters-list button.monster-sprite:active,
-#monsters-list button.monster-sprite:focus {
+#monsters-list button.monster-sprite:focus,
+#product-list button.monster-sprite:active,
+#product-list button.monster-sprite:focus {
     background-color: initial;
     /* remove orange outline in android */
     outline: none;
@@ -330,7 +340,8 @@ button {
     }
 }
 
-#monsters-list li span {
+#monsters-list li span,
+#product-list li span {
     color: white;
     font-size: 14px;
     background-color: #1e9faf;
@@ -396,7 +407,7 @@ button {
 
 .mui-panel.detail-panel {
     will-change: transform;
-    max-width: 600px;
+    max-width: 800px;
     margin: 58px auto 10px;
     padding: 0;
     position: absolute;
@@ -413,12 +424,13 @@ button {
 }
 
 .detail-panel-header {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     color: white;
     text-align: center;
     padding: 15px;
     font-size: 24px;
+    text-transform: uppercase;
 }
 
 .detail-panel-content {
@@ -1085,4 +1097,20 @@ button.dropdown-button:hover {
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+#post,
+#page,
+#attachment,
+#listing_type {
+    display: none !important;
+}
+
+svg path,
+svg rect {
+    fill: #26C6DA;
+}
+
+.loader {
+    text-align: center;
 }

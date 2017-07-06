@@ -63,11 +63,6 @@
         </ul>
     </div>
     <div id="content-wrapper">
-        <div class="loader">
-            <svg viewBox="0 0 32 32" width="32" height="32">
-                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-            </svg>
-        </div>
         <div class="mui--appbar-height"></div>
         <div class="mui-container-fluid">
             <br>
@@ -77,6 +72,19 @@
                 <label for="monsters-search-bar" class="sr-only">Find Anything in San Juan del Sur</label>
             </div>
             <div id="monsters-list-wrapper">
+                <div class="loader loader--style4 text-center" title="3">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <rect x="0" y="0" width="4" height="7" fill="#26C6DA">
+                            <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0s" dur="0.6s" repeatCount="indefinite" />
+                        </rect>
+                        <rect x="10" y="0" width="4" height="7" fill="#26C6DA">
+                            <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0.2s" dur="0.6s" repeatCount="indefinite" />
+                        </rect>
+                        <rect x="20" y="0" width="4" height="7" fill="#26C6DA">
+                            <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0.4s" dur="0.6s" repeatCount="indefinite" />
+                        </rect>
+                    </svg>
+                </div>
                 <ul id="monsters-list"></ul>
                 <div id="progress-mask"></div>
             </div>
@@ -99,9 +107,9 @@
             <div class="detail-view-fg">
                 <button type="button" class="back-button detail-back-button hover-shadow"></button>
                 <div class="mui-panel detail-panel" style="overflow-y: scroll;">
-                    <h1 style="background: rgb(74, 58, 100);" class="detail-panel-header">Loading title...</h1>
+                    <h1 style="background: #1e9faf;" class="detail-panel-header">Loading title...</h1>
                     <div class="detail-panel-content">
-                        <div class="detail-header">
+                        <div class="detail-header hidden">
                             <div class="detail-sprite monster-sprite sprite-93" style="opacity: 1;"></div>
                             <div class="detail-infobox">
                                 <div class="detail-types-and-num">
@@ -109,10 +117,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="detail-below-header">
+                        <div class="detail-below-header hidden">
                             <div class="monster-species">Loading Name...</div>
                             <div class="monster-description">Loading Content...</div>
                         </div>
+                        <div class="loader loader--style4 text-center" title="3">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <rect x="0" y="0" width="4" height="7" fill="#26C6DA">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0s" dur="0.6s" repeatCount="indefinite" />
+                                </rect>
+                                <rect x="10" y="0" width="4" height="7" fill="#26C6DA">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0.2s" dur="0.6s" repeatCount="indefinite" />
+                                </rect>
+                                <rect x="20" y="0" width="4" height="7" fill="#26C6DA">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="scale" values="1,1; 1,3; 1,1" begin="0.4s" dur="0.6s" repeatCount="indefinite" />
+                                </rect>
+                            </svg>
+                        </div>
+                        <ul id="product-list"></ul>
                     </div>
                 </div>
             </div>
@@ -140,11 +162,20 @@
     <script>
     $(function() {
         $ = jQuery;
-      
-        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/business/?per_page=100', function(data) {
-            $.each(data, function(i, post) {
-                $('ul#monsters-list').append('<li style="background: url(img/icon-196.png);     background-repeat: no-repeat; background-size: contain;" id="' + post.id + '"><button type="button" class="monster-sprite sprite-' + post.id + '"></button><span>' + post.title['rendered'] + '</span></li>');
 
+        $(document).ajaxStart(function() {
+            $(".loader").show();
+        }).ajaxStop(function() {
+            $(".loader").hide();
+        });
+
+
+
+        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/types', function(data) {
+            console.log(data);
+            $.each(data, function(i, post) {
+                console.log(data[i].name);
+                $('ul#monsters-list').append('<li style="background: url(img/icon-196.png);     background-repeat: no-repeat; background-size: contain;" id="' + data[i].slug + '"><button type="button" class="monster-sprite sprite-' + data[i].slug + '"></button><span>' + data[i].name + '</span></li>');
 
             });
         });
@@ -155,9 +186,35 @@
 
     $(document).on('click', '#monsters-list li', function() {
         $('#detail-view-container').removeClass('hidden');
+        $('.mui-panel.detail-panel > h1').html(this.id);
+        $('#detail-view-container ul#product-list').empty();
+
 
         console.log(this.id);
-        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/business/' + this.id, function(data) {
+
+
+        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/' + this.id, function(data) {
+
+            $.each(data, function(i, post) {
+                $('#detail-view-container ul#product-list').append('<li style="background: url(img/icon-196.png);     background-repeat: no-repeat; background-size: contain;"  id="' + post.id + '" type="'+ post.type +'"><button type="button" class="monster-sprite sprite-' + post.id + '"></button><span>' + post.title['rendered'] + '</span></li>');
+
+
+
+            });
+
+        });
+
+    });
+
+    $(document).on('click', '#product-list li', function() {
+        $('#detail-view-container').removeClass('hidden');
+        $('.detail-header').removeClass('hidden');
+        $('.detail-below-header').removeClass('hidden');
+        $('#product-list').addClass('hidden');
+
+
+        console.log(this.id);
+        $.getJSON('https://sjdsdirectoryapp.senorcoders.com/sjdsdirectory-new/wp-json/wp/v2/'+ this.type +'/' + this.id, function(data) {
             $('.mui-panel.detail-panel > h1').html(data.title['rendered']);
             $('.detail-national-id > span').html('#' + data.id);
             $('.monster-species').html(data.title);
@@ -165,10 +222,15 @@
 
         });
 
+
+
     });
 
     $(document).on('click', '.detail-back-button', function() {
         $('#detail-view-container').addClass('hidden');
+        $('.detail-header').addClass('hidden');
+        $('.detail-below-header').addClass('hidden');
+        $('#product-list').removeClass('hidden');
 
     });
 
