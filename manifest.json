@@ -17,7 +17,7 @@
     }, {
         "src": "img/icon-196.png",
         "sizes": "196x196",
-        "type": "image/png"
+        "type": "image/png" 
     }, {
         "src": "img/icon-384.png",
         "sizes": "384x384",
@@ -26,4 +26,11 @@
     "start_url": "index.html?launcher=true",
     "theme_color": "#26C6DA",
     "background_color": "#EEEEEE"
+},
+{
+  "name": "SJDS Directory Notifications",
+  "gcm_sender_id": "1025245572227"
 }
+
+
+

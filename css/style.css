@@ -796,7 +796,8 @@ button {
 /* minutia */
 
 .monster-minutia {
-    display: flex;
+    /*    display: flex;
+*/
     margin: 0 20px 10px;
 }
 
@@ -1113,4 +1114,5 @@ svg rect {
 
 .loader {
     text-align: center;
+    display: none;
 }
